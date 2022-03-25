@@ -1,4 +1,4 @@
-package com.example.demo.student;
+package com.example.demo.entity;
 
 import java.time.LocalDate;
 import java.time.Period;
@@ -25,30 +25,24 @@ public class Student {
         strategy = GenerationType.SEQUENCE,
         generator = "student_sequence"
     )
-
     private Long id;
     private String name;
     private String email;
     private LocalDate dob;
-
     @Transient
     private Integer age;
+    private String imageUrl;
     
     public Student(){
 
     }
 
-    public Student(Long id, String name, String email, LocalDate dob) {
-        this.id = id;
+    public Student(String name, String email, LocalDate dob, Integer age, String imageUrl) {
         this.name = name;
         this.email = email;
         this.dob = dob;
-    }
-
-    public Student(String name, String email, LocalDate dob) {
-        this.name = name;
-        this.email = email;
-        this.dob = dob;
+        this.age = age;
+        this.imageUrl = imageUrl;
     }
 
     public Long getId() {
@@ -96,4 +90,13 @@ public class Student {
         return "Student [age=" + age + ", dob=" + dob + ", email=" + email + ", id=" + id + ", name=" + name + "]";
     }
 
+    public String getImageUrl() {
+        return imageUrl;
+    }
+
+    public void setImageUrl(String imageUrl) {
+        this.imageUrl = imageUrl;
+    }
+
+    
 }

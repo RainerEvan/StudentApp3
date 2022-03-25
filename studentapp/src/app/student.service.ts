@@ -1,5 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { FormGroup } from '@angular/forms';
 import { Observable } from 'rxjs';
 import { Student } from './student';
 
@@ -15,8 +16,8 @@ export class StudentService {
     return this.http.get<Student[]>(this.apiServerUrl+'/api/student');
   }
 
-  public addStudents(student: Student): Observable<Student>{
-    return this.http.post<Student>(this.apiServerUrl+'/api/new',student);
+  public addStudents(formData: FormData): Observable<Student>{
+    return this.http.post<any>(this.apiServerUrl+'/api/new',formData);
   }
 
   public updateStudents(student: Student): Observable<Student>{

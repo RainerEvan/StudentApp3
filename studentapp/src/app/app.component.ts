@@ -13,6 +13,9 @@ export class AppComponent implements OnInit{
   public students: Student[] = [];
   public editStudent: Student;
   public deleteStudent: Student;
+  public userFile: File;
+  public imagePath: any;
+  public imageUrl: any;
 
   constructor(private studentService: StudentService){}
 
@@ -34,17 +37,39 @@ export class AppComponent implements OnInit{
 
   public onAddStudent(addForm: NgForm): void{
     document.getElementById('add-student-form')!.click();
-    this.studentService.addStudents(addForm.value).subscribe(
+    const formData = new FormData();
+    const student = addForm.value;
+
+    formData.append('student',JSON.stringify(student));
+    formData.append('imageUrl',this.userFile);
+    
+    this.studentService.addStudents(formData).subscribe(
       (response: Student) => {
         console.log(response);
         this.getStudents();
         addForm.reset();
+        this.imageUrl = 0;
       },
       (error: HttpErrorResponse) => {
         alert(error.message);
         addForm.reset();
+        this.imageUrl = 0;
       }
     );
+  }
+
+  public onSelectFile(event:any){
+    if(event.target.files.length > 0){
+      const file = event.target.files[0];
+      this.userFile = file;
+
+      var reader = new FileReader();
+      this.imagePath = file;
+      reader.readAsDataURL(file);
+      reader.onload = (_event) => {
+        this.imageUrl = reader.result;
+      }
+    }
   }
 
   public onUpdateStudent(student: Student): void{
