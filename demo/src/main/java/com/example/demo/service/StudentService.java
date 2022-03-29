@@ -44,7 +44,7 @@ public class StudentService {
     }
 
     public Student findStudentById(Long studentId){
-        return studentRepository.findStudentById(studentId).orElseThrow(()->new IllegalStateException("student with id "+ studentId +" does not exist"));
+        return studentRepository.findStudentById(studentId).orElseThrow(()->new IllegalStateException("Student with id "+ studentId +" does not exist"));
     }
 
     public void addNewStudent(MultipartFile file, String studentString) throws JsonMappingException, JsonProcessingException {
@@ -70,7 +70,7 @@ public class StudentService {
         Optional<Student> studentOptional = studentRepository.findStudentByEmail(student.getEmail());
 
         if(studentOptional.isPresent()){
-            throw new IllegalStateException("email taken");
+            throw new IllegalStateException("Email taken");
         }
         
         student.setImageUrl(newFileName);
@@ -78,7 +78,7 @@ public class StudentService {
     }
 
     public Student updateStudent(Student student) {
-        Student currStudent = studentRepository.findById(student.getId()).orElseThrow(()->new IllegalStateException("student with id "+ student.getId() +" does not exist"));
+        Student currStudent = studentRepository.findById(student.getId()).orElseThrow(()->new IllegalStateException("Student with id "+ student.getId() +" does not exist"));
 
         if(student.getName() != null && student.getName().length()>0 && !Objects.equals(currStudent.getName(), student.getName())){
             currStudent.setName(student.getName());
@@ -87,7 +87,7 @@ public class StudentService {
         if(student.getEmail()!= null && student.getEmail().length() > 0 && !Objects.equals(currStudent.getEmail(), student.getEmail())){
             Optional<Student> studentOptional = studentRepository.findStudentByEmail(student.getEmail());
             if(studentOptional.isPresent()){
-                throw new IllegalStateException("email taken");
+                throw new IllegalStateException("Email taken");
             }
             currStudent.setEmail(student.getEmail());
         }
